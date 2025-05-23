@@ -12,6 +12,7 @@ def hello_world():
             "time": datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y"),
             "hostname": socket.gethostname(),
             "message": "You are doing well, human.",
+            "status": "up",
         }
     )
 
