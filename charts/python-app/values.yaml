@@ -52,7 +52,7 @@ service:
 ingress:
   annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod-dns
-      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
       nginx.ingress.kubernetes.io/ssl-passthrough: "true"
   enabled: true
   className: "nginx"
@@ -60,7 +60,7 @@ ingress:
     - host: python-app.azurelaboratory.com
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
   tls:
    - secretName: python-app-tls
      hosts:
