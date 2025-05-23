@@ -52,7 +52,6 @@ service:
 ingress:
   annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod-dns
-      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
       nginx.ingress.kubernetes.io/ssl-passthrough: "true"
   enabled: true
   className: "nginx"
