@@ -60,7 +60,7 @@ ingress:
     - host: python-app.azurelaboratory.com
       paths:
         - path: /
-          pathType: Prefix
+          pathType: ImplementationSpecific
   tls:
    - secretName: python-app-tls
      hosts:
