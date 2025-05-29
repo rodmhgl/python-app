@@ -1,0 +1,34 @@
+{
+	"name": "Python 3",
+	"image": "mcr.microsoft.com/devcontainers/python:0-3.11",
+	"forwardPorts": [3000, 7007],
+	"features": {
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/devcontainers/features/docker-in-docker": {},
+		"ghcr.io/devcontainers/features/azure-cli:1": {},
+		"ghcr.io/akhildevelops/devcontainer-features/pip": {
+			"PACKAGES": "pre-commit"
+		},
+		"ghcr.io/devcontainer-community/devcontainer-features/chezmoi.io:1": {},
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"njpwerner.autodocstring",
+				"ms-python.flake8",
+				"github.vscode-github-actions",
+				"GitHub.vscode-pull-request-github",
+				"ms-python.isort",
+				"ms-python.vscode-pylance",
+				"ms-python.python",
+				"ms-python.black-formatter"
+			]
+		}
+	},
+	"postStartCommand": {
+		"pre-commit": "pre-commit install-hooks",
+		"requirements": "pip install -r requirements.txt"
+	},
+	"postAttachCommand": {}
+}

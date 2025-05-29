@@ -1,0 +1,19 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod-dns
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: admin@kube-playground.io
+    privateKeySecretRef:
+      name: letsencrypt-prod-dns
+    solvers:
+    - dns01:
+        azureDNS:
+          hostedZoneName: azurelaboratory.com
+          resourceGroupName: rg-azurelaboratory-external-dns
+          subscriptionID: fac4f989-bd54-4dcd-91c1-c5da1f3ccf86
+          environment: AzurePublicCloud
+          managedIdentity:  
+            clientID: a5917d60-f9cc-44fe-8699-d3add9adfb8d 

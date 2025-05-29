@@ -1,0 +1,16 @@
+cert-manager:
+  namespace: cert-manager
+  enableCertificateOwnerRef: true
+
+  crds:
+    enabled: true
+
+  prometheus:
+    enabled: true
+  
+  podLabels:
+    azure.workload.identity/use: "true"
+
+  serviceAccount:
+    labels:
+      azure.workload.identity/use: "true"

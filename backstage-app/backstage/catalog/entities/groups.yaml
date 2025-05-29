@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: development
+  description: The development business unit
+spec:
+  type: team
+  profile:
+    displayName: development
+    email: admin@kube-playground.io
+  children: []

@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backstage
+  labels:
+    app: backstage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backstage
+  template:
+    metadata:
+      labels:
+        app: backstage
+    spec:
+      containers:
+      - name: backstage
+        image: rodstewart/backstage:v1.0.1
+        ports:
+        - containerPort: 7007
+        env:
+          - name: APP_CONFIG_app_baseUrl
+            value: https://backstage.azurelaboratory.com
+          - name: APP_CONFIG_backend_baseUrl
+            value: https://backstage.azurelaboratory.com
+          - name: POSTGRES_HOST
+            value: psql-postgresql
+          - name: POSTGRES_USER
+            value: some_secret_value(DO NOT PUSH SECRETS TO GITHUB)
+          - name: POSTGRES_PASSWORD
+            value: some_secret_value(DO NOT PUSH SECRETS TO GITHUB)
+          - name: GITHUB_TOKEN
+            value: some_secret_value(DO NOT PUSH SECRETS TO GITHUB)
+          - name: AUTH_GITHUB_CLIENT_ID
+            value: some_secret_value(DO NOT PUSH SECRETS TO GITHUB)
+          - name: AUTH_GITHUB_CLIENT_SECRET
+            value: some_secret_value(DO NOT PUSH SECRETS TO GITHUB)
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backstage
+spec:
+  selector:
+    app: backstage
+  ports:
+    - protocol: TCP
+      port: 7007
+      targetPort: 7007
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backstage
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod-dns
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "backstage.azurelaboratory.com"
+    http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: backstage
+              port:
+                number: 7007
+  tls:
+  - secretName: backstage-tls
+    hosts:
+      - backstage.azurelaboratory.com
