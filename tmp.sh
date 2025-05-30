@@ -49,4 +49,9 @@ docker run -d \
   postgres:16
 
 yarn build:backend --config ../../app-config.yaml --config ../../app-config.production.yaml 
+
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+helm install psql bitnami/postgresql --version 15.5.28 -n backstage --create-namespace -f values-postgres.yaml
+
 #endregion
