@@ -21,7 +21,7 @@ graph TB
 
 - **Runtime**: Python 3.11 (Alpine Linux)
 - **Framework**: Flask 3.0.3
-- **Container Registry**: Docker Hub (rodstewart/${{ values.name }})
+- **Container Registry**: Docker Hub (rodstewart/python-app)
 - **Orchestration**: Kubernetes/AKS
 - **Deployment**: Argo CD (GitOps)
 - **Ingress**: NGINX Ingress Controller

@@ -1,4 +1,4 @@
-# ${{ values.name }} Service Documentation
+# python-app Service Documentation
 
 ## Overview
 
@@ -6,10 +6,10 @@ A containerized Python Flask application that provides pod details and health st
 
 ## Quick Links
 
-- **Live Service**: [${{ values.name }}.azurelaboratory.com](https://${{ values.name }}.azurelaboratory.com)
-- **Health Check**: [/api/v1/healthz](https://${{ values.name }}.azurelaboratory.com/api/v1/healthz)
-- **Argo CD**: [Application Status](https://argocd.azurelaboratory.com/applications/${{ values.name }})
-- **Source Code**: [GitHub Repository](https://github.com/rodmhgl/${{ values.name }})
+- **Live Service**: [python-app.azurelaboratory.com](https://python-app.azurelaboratory.com)
+- **Health Check**: [/api/v1/healthz](https://python-app.azurelaboratory.com/api/v1/healthz)
+- **Argo CD**: [Application Status](https://argocd.azurelaboratory.com/applications/python-app)
+- **Source Code**: [GitHub Repository](https://github.com/rodmhgl/python-app)
 
 ## Service Endpoints
 
@@ -22,7 +22,7 @@ Returns detailed information about the running pod instance.
 ```json
 {
   "time": "02:30PM on January 15, 2025",
-  "hostname": "${{ values.name }}-7d4f8b9c-x8k2l",
+  "hostname": "python-app-7d4f8b9c-x8k2l",
   "message": "You are doing well, human!!"
 }
 ```
