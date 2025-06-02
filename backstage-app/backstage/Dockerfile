@@ -7,13 +7,39 @@ ENV PYTHON=/usr/bin/python3
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt-get update && \
-    apt-get install -y --no-install-recommends python3 python3-pip python3-venv g++ build-essential && \
+    apt-get install -y --no-install-recommends \
+        python3 \
+        python3-pip \
+        python3-venv \
+        g++ \
+        build-essential \
+        gcc \
+        musl-dev \
+        openjdk-17-jdk \
+        curl \
+        graphviz \
+        fonts-dejavu \
+        fontconfig && \
     rm -rf /var/lib/apt/lists/*
 
 ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+RUN curl -o plantuml.jar -L "https://github.com/plantuml/plantuml/releases/download/v1.2024.6/plantuml-1.2024.6.jar" && \
+    echo "3e944755cbed59e1ed9332691d92294bef7bbcda  plantuml.jar" | \
+    sha1sum -c - && mv plantuml.jar /opt/plantuml.jar
 RUN pip3 install mkdocs-techdocs-core
+RUN pip install mkdocs-kroki-plugin
+
+# RUN echo $'#!/bin/sh\n\njava -Dplantuml.include.path=${diagramDir} -jar '/opt/plantuml.jar ' ${@}' >> /usr/local/bin/plantuml
+RUN echo '#!/bin/sh\n\njava -jar '/opt/plantuml.jar' ${@}' >> /usr/local/bin/plantuml
+RUN chmod 755 /usr/local/bin/plantuml
+
+RUN which plantuml
+RUN java -jar /opt/plantuml.jar -version
+RUN cat /usr/local/bin/plantuml
+RUN plantuml -version
 
 # From here on we use the least-privileged `node` user to run the backend.
 USER node
