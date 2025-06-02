@@ -19,6 +19,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         curl \
         graphviz \
         fonts-dejavu \
+        chromium \
         fontconfig && \
     rm -rf /var/lib/apt/lists/*
 
@@ -29,17 +30,12 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 RUN curl -o plantuml.jar -L "https://github.com/plantuml/plantuml/releases/download/v1.2024.6/plantuml-1.2024.6.jar" && \
     echo "3e944755cbed59e1ed9332691d92294bef7bbcda  plantuml.jar" | \
     sha1sum -c - && mv plantuml.jar /opt/plantuml.jar
-RUN pip3 install mkdocs-techdocs-core
-RUN pip install mkdocs-kroki-plugin
-
-# RUN echo $'#!/bin/sh\n\njava -Dplantuml.include.path=${diagramDir} -jar '/opt/plantuml.jar ' ${@}' >> /usr/local/bin/plantuml
-RUN echo '#!/bin/sh\n\njava -jar '/opt/plantuml.jar' ${@}' >> /usr/local/bin/plantuml
+RUN pip3 install mkdocs-techdocs-core markdown-inline-mermaid mkdocs-kroki-plugin
+RUN npm install -g @mermaid-js/mermaid-cli
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+RUN echo '#!/bin/sh\n\njava -Dplantuml.include.path=${diagramDir} -jar '/opt/plantuml.jar ' ${@}' >> /usr/local/bin/plantuml
 RUN chmod 755 /usr/local/bin/plantuml
-
-RUN which plantuml
-RUN java -jar /opt/plantuml.jar -version
-RUN cat /usr/local/bin/plantuml
-RUN plantuml -version
+# RUN echo '#!/bin/sh\n\njava -jar '/opt/plantuml.jar' ${@}' >> /usr/local/bin/plantuml
 
 # From here on we use the least-privileged `node` user to run the backend.
 USER node

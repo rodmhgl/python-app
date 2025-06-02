@@ -1,11 +1,14 @@
-site_name: '${{ values.name }}'
-site_description: 'Comprehensive documentation for the ${{ values.name }} service'
-repo_url: https://github.com/azurelaboratory/${{ values.name }}
+site_name: 'python-app'
+site_description: 'Comprehensive documentation for the python-app service'
+repo_url: https://github.com/rodmhgl/python-app
 edit_uri: edit/main/docs
 
 plugins:
   - techdocs-core
   - kroki
+
+markdown_extensions:
+  - markdown_inline_mermaid
 
 nav:
   - Overview: 'index.md'
